@@ -1,6 +1,6 @@
 from quickcache.django_quickcache import get_django_quickcache
 
-quickcache = get_django_quickcache(timeout=5 * 60, memoize_timeout=0)
+quickcache = get_django_quickcache(timeout=5 * 60, memoize_timeout=10)
 
 
 @quickcache(['person.id'], skip_arg='strict', timeout=60 * 60)
