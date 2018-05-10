@@ -7,6 +7,11 @@ def clear_all_posts_cache(person):
     cache.delete(cache_key)
 
 
+def prime_all_posts_cache(person, posts):
+    cache_key = get_all_posts_cache_key(person)
+    cache.set(cache_key, posts, timeout=60*60)  # cache for one hour
+
+
 def get_all_posts(person, strict=False):
     cache_key = get_all_posts_cache_key(person)
     if strict:
@@ -15,5 +20,5 @@ def get_all_posts(person, strict=False):
         posts = cache.get(cache_key, default=None)
     if posts is None:
         posts = Post.objects.filter(person=person).all()
-        cache.set(cache_key, posts, timeout=60*60)  # cache for one hour
+        prime_all_posts_cache(person)
     return posts
