@@ -15,5 +15,5 @@ def get_all_posts(person, strict=False):
         posts = cache.get(cache_key, default=None)
     if posts is None:
         posts = Post.objects.filter(person=person).all()
-        cache.set(cache_key, posts)
+        cache.set(cache_key, posts, timeout=60*60)  # cache for one hour
     return posts
